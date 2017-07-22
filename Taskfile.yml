@@ -6,7 +6,7 @@ build:
 clean:
   desc: remove binaries
   cmds:
-    - rm ./go_template || true
+    - rm go_template
 
 staging:
   desc: push to heroku staging

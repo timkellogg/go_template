@@ -1,9 +1,11 @@
 package graph
 
 import (
+	"../../models"
 	"github.com/graphql-go/graphql"
 )
 
+// RootQuery is the start of the graphql node that retrieves data
 var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 	Name: "RootQuery",
 	Fields: graphql.Fields{
@@ -14,15 +16,17 @@ var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 				"id": &graphql.ArgumentConfig{Type: graphql.String},
 			},
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-				idQuery, isOK := params.Args["id"].(string)
-				if isOK {
-					// retrieve user
-				}
+				// idQuery, isOK := params.Args["id"].(string)
+				// if isOK {
+				// retrieve user
+				// }
+				return models.User{}, nil
 			},
 		},
 	},
 })
 
+// RootMutation is the start of the graphql node that allows mutations to db
 var RootMutation = graphql.NewObject(graphql.ObjectConfig{
 	Name: "RootMutation",
 	Fields: graphql.Fields{
@@ -35,11 +39,12 @@ var RootMutation = graphql.NewObject(graphql.ObjectConfig{
 				},
 			},
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-				email, _ := params.Args["email"].(string)
+				// email, _ := params.Args["email"].(string)
 
 				// determine if valid
 
 				// perform operation
+				return models.User{}, nil
 			},
 		},
 	},

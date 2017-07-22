@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"./services/graph"
+
 	"github.com/gorilla/mux"
 )
 
@@ -19,9 +21,9 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-// Route{"Registration", "POST", "/api/users", controllers.UsersCreate},
-// Route{"Login", "POST", "/api/auth/login", controllers.AuthLogin},
-// Route{"Graphql", "ANY", }
+	// Route{"Registration", "POST", "/api/users", controllers.UsersCreate},
+	// Route{"Login", "POST", "/api/auth/login", controllers.AuthLogin},
+	Route{"Graphql", "ANY", "/graphql", graph.Perform},
 }
 
 // Cors - enable logging

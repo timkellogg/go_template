@@ -2,6 +2,9 @@ package graph
 
 import (
 	"log"
+	"net/http"
+
+	"encoding/json"
 
 	"github.com/graphql-go/graphql"
 )
@@ -23,8 +26,8 @@ func executeQuery(query string, schema graphql.Schema) *graphql.Result {
 	return result
 }
 
-// Process the api to the graph package. Takes a http request object and calls the graph layer
-// to perform an operation and return the results
-// func Process(query string) {
-
-// }
+// Perform a graph query and return the results
+func Perform(w http.ResponseWriter, r *http.Request) {
+	result := executeQuery(r.URL.Query().Get("query"), schema)
+	json.NewEncoder(w).Encode(result)
+}
