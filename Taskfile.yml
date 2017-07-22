@@ -6,7 +6,13 @@ build:
 clean:
   desc: remove binaries
   cmds:
-    - rm ./go_template
+    - rm ./go_template || true
+
+staging:
+  desc: push to heroku staging
+  deps: [build]
+  cmds:
+    - git push staging master
 
 migrate_down:
   desc: migrate down
@@ -18,8 +24,14 @@ migrate_up:
   cmds:
     - sql-migrate up
 
+production:
+  desc: push to heroku production
+  deps: [build]
+  cmds:
+    - git push production master
+
 serve:
   desc: builds and executes app binary
-  deps: [build]
+  deps: [clean, build]
   cmds:
     - ./go_template
