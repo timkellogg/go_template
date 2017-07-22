@@ -1,0 +1,7 @@
+development:
+    dialect: postgres
+    datasource: dbname=go_template_development sslmode=disable
+
+test:
+    dialect: postgres
+    datasource: dbname=go_template_test sslmode=disable

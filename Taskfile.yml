@@ -1,0 +1,15 @@
+build:
+  cmds: 
+    - go build -v -i main.go
+
+clean:
+  cmds:
+    - rm ./main
+
+migrate_down:
+  cmds:
+    - sql-migrate down
+
+migrate_up:
+  cmds:
+    - sql-migrate up
