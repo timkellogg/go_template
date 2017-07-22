@@ -1,15 +1,25 @@
 build:
+  desc: complile go binary
   cmds: 
-    - go build -v -i main.go
+    - go build
 
 clean:
+  desc: remove binaries
   cmds:
-    - rm ./main
+    - rm ./go_template
 
 migrate_down:
+  desc: migrate down
   cmds:
     - sql-migrate down
 
 migrate_up:
+  desc: migrate up
   cmds:
     - sql-migrate up
+
+serve:
+  desc: builds and executes app binary
+  deps: [build]
+  cmds:
+    - ./go_template
