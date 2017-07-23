@@ -13,17 +13,23 @@ var RootMutation = graphql.NewObject(graphql.ObjectConfig{
 			Type:        UserType,
 			Description: "Creates a new user",
 			Args: graphql.FieldConfigArgument{
-				"email": &graphql.ArgumentConfig{
+				"Email": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.String),
 				},
 			},
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-				email, _ := params.Args["email"].(string)
+				email, _ := params.Args["Email"].(string)
 
-				var user models.User
+				user := models.User{Email: email}
 
-				return user.SaveUser(email)
+				return user.SaveUser()
 			},
 		},
 	},
 })
+
+// mutation {
+//   createUser(email: "tim@gmail") {
+//     email
+//   }
+// }

@@ -1,8 +1,10 @@
 package graph
 
 import (
-	"log"
+	"errors"
+	"strconv"
 
+	"../../config"
 	"../../models"
 	"github.com/graphql-go/graphql"
 )
@@ -15,15 +17,21 @@ var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 			Type:        UserType,
 			Description: "Returns a user",
 			Args: graphql.FieldConfigArgument{
-				"id": &graphql.ArgumentConfig{Type: graphql.String},
+				"ID": &graphql.ArgumentConfig{Type: graphql.Int},
 			},
-			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-				log.Println("RootMutation")
-				// idQuery, isOK := params.Args["id"].(string)
-				// if isOK {
-				// retrieve user
-				// }
-				return models.User{}, nil
+			Resolve: func(params graphql.ResolveParams) (models.User, error) {
+				id, err := strconv.Atoi(params.Args["ID"].(string))
+
+				var user models.User
+
+				if err == nil {
+
+					record := config.DB.Find(&user, id)
+
+					return record, err
+				}
+
+				return models.User{}, errors.New("Not Found")
 			},
 		},
 	},
