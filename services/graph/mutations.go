@@ -27,9 +27,3 @@ var RootMutation = graphql.NewObject(graphql.ObjectConfig{
 		},
 	},
 })
-
-// mutation {
-//   createUser(email: "tim@gmail") {
-//     email
-//   }
-// }

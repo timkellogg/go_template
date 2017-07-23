@@ -17,18 +17,16 @@ var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 			Type:        UserType,
 			Description: "Returns a user",
 			Args: graphql.FieldConfigArgument{
-				"ID": &graphql.ArgumentConfig{Type: graphql.Int},
+				"ID": &graphql.ArgumentConfig{Type: graphql.String},
 			},
-			Resolve: func(params graphql.ResolveParams) (models.User, error) {
+			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 				id, err := strconv.Atoi(params.Args["ID"].(string))
 
 				var user models.User
 
 				if err == nil {
-
-					record := config.DB.Find(&user, id)
-
-					return record, err
+					config.DB.Find(&user, id)
+					return user, err
 				}
 
 				return models.User{}, errors.New("Not Found")

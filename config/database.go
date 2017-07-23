@@ -25,5 +25,6 @@ func InitializeDb() {
 		log.Fatal(err)
 	}
 
+	DB.DB().SetMaxIdleConns(100)
 	DB.LogMode(true)
 }
