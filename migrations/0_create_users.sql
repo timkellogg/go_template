@@ -3,6 +3,7 @@
 CREATE TABLE users (
   id serial primary key,
   email text not null unique,
+  encrypted_password text not null,
   created_at timestamp not null,
   updated_at timestamp,
   deleted_at timestamp
