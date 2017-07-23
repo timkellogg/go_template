@@ -4,7 +4,8 @@ CREATE TABLE users (
   id serial primary key,
   email text not null unique,
   created_at timestamp not null,
-  updated_at timestamp
+  updated_at timestamp,
+  deleted_at timestamp
 );
 
 -- +migrate Down
