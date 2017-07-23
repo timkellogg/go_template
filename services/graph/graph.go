@@ -1,12 +1,13 @@
 package graph
 
 import (
-	"log"
+	"encoding/json"
 	"net/http"
 
-	"encoding/json"
+	"log"
 
 	"github.com/graphql-go/graphql"
+	graphiql "github.com/mnmtanish/go-graphiql"
 )
 
 var schema, _ = graphql.NewSchema(graphql.SchemaConfig{
@@ -19,15 +20,27 @@ func executeQuery(query string, schema graphql.Schema) *graphql.Result {
 		Schema:        schema,
 		RequestString: query,
 	})
-	if len(result.Errors) > 0 {
-		// handle errors better
-		log.Printf("Failed executing graphql query. Errors: %v", result.Errors)
-	}
 	return result
+}
+
+func sendError(w http.ResponseWriter, err error) {
+	log.Println(err)
+	w.WriteHeader(500)
+	w.Write([]byte(err.Error()))
 }
 
 // Perform a graph query and return the results
 func Perform(w http.ResponseWriter, r *http.Request) {
-	result := executeQuery(r.URL.Query().Get("query"), schema)
-	json.NewEncoder(w).Encode(result)
+	req := &graphiql.Request{}
+	if err := json.NewDecoder(r.Body).Decode(req); err != nil {
+		sendError(w, err)
+		return
+	}
+
+	result := executeQuery(req.Query, schema)
+	if err := json.NewEncoder(w).Encode(result); err != nil {
+		sendError(w, err)
+	}
+
+	return
 }

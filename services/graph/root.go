@@ -1,6 +1,8 @@
 package graph
 
 import (
+	"log"
+
 	"../../models"
 	"github.com/graphql-go/graphql"
 )
@@ -16,6 +18,7 @@ var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 				"id": &graphql.ArgumentConfig{Type: graphql.String},
 			},
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+				log.Println("RootMutation")
 				// idQuery, isOK := params.Args["id"].(string)
 				// if isOK {
 				// retrieve user
@@ -40,7 +43,6 @@ var RootMutation = graphql.NewObject(graphql.ObjectConfig{
 			},
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 				// email, _ := params.Args["email"].(string)
-
 				// determine if valid
 
 				// perform operation

@@ -7,6 +7,7 @@ import (
 	"./services/graph"
 
 	"github.com/gorilla/mux"
+	"github.com/mnmtanish/go-graphiql"
 )
 
 // Route is a REST endpoint that maps common methods
@@ -21,9 +22,9 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-	// Route{"Registration", "POST", "/api/users", controllers.UsersCreate},
-	// Route{"Login", "POST", "/api/auth/login", controllers.AuthLogin},
-	Route{"Graphql", "ANY", "/graphql", graph.Perform},
+	Route{"Graphql", "GET", "/graphql", graph.Perform}, // figure out how to unify the GET and POST routes
+	Route{"Graphql", "POST", "/graphql", graph.Perform},
+	Route{"Graphiql", "GET", "/test", graphiql.ServeGraphiQL}, // get rid of in prod
 }
 
 // Cors - enable logging
